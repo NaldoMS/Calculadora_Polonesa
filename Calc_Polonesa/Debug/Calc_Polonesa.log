@@ -1,0 +1,5 @@
+﻿  Principal.c
+c:\users\naldo\desktop\calc_polonesa - copia\calc_polonesa\principal.c(89): warning C4013: 'gets' indefinido; assumindo extern retornando int
+c:\users\naldo\desktop\calc_polonesa - copia\calc_polonesa\principal.c(82): warning C4101: 'n': variável local não referenciada
+  Calc_Polonesa.vcxproj -> C:\Users\naldo\Desktop\Calc_Polonesa - Copia\Debug\Calc_Polonesa.exe
+  Calc_Polonesa.vcxproj -> C:\Users\naldo\Desktop\Calc_Polonesa - Copia\Debug\Calc_Polonesa.pdb (Partial PDB)
