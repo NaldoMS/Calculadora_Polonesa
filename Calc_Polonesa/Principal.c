@@ -1,98 +1,50 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <ctype.h> 
-#include <string.h>
 #include "Pilha.h"
-
-void aplicarOperacao(Pilha * p, char op)
-{
-	int lhs, rhs, result;
-
-	if (tamanho(p) >= 2) {
-		rhs = desempilhar(p);
-		lhs = desempilhar(p);
-		switch (op) {
-		case '+':
-			result = lhs + rhs;
-			empilhar(p, result);
-			break;
-
-		case '-':
-			result = lhs - rhs;
-			empilhar(p, result);
-			break;
-
-		case '*':
-			result = lhs * rhs;
-			empilhar(p, result);
-			break;
-
-		case '/':
-			if (rhs != 0) {
-				result = lhs / rhs;
-				empilhar(p, result);
-				break;
-			}
-			else {
-				printf("Impossivel a divisao por zero\n");
-				empilhar(p, lhs);
-				empilhar(p, rhs);
-			}
-			break;
-
-		default: printf("Operacao invalida\n");
-			empilhar(p, lhs);
-			empilhar(p, rhs);
-
-		}
-	}
-
-	else
-	{
-		printf("Voce nao pode realizar uma operacao com menos de dois numeros\n");
-	}
-}
-
-//string getLine(void)
-//{
-//	string line;
-//	int n, ch;
-//	n = 0;
-//	line = malloc(100 + 1);
-//	if (line == NULL) {
-//		exit(EXIT_FAILURE);
-//	}
-//
-//	while ((ch = getc(stdin)) != '\n') {
-//		if (n >= 100) {
-//			free(line);
-//			exit(EXIT_FAILURE);
-//		}
-//		line[n++] = ch;
-//	}
-//	line[n] = '\0';
-//	return line;
-//}
-
-//string getLine(void);
 
 int main() {
 	Pilha * p = criar();
 	char ch[100];
-	int num, n;
+	int num;
 	int i = 0, j = 0, cont = 0;
 	string s = malloc(100+1);
 
+	printf("--------------------------\n");
+	printf("| \t \t \t |\n");
+	printf("| Calculadora Polonesa   |\n");
+	printf("| \t \t \t |\n");
+	printf("--------------------------\n");
 	while (1)
 	{
 		printf(">");
 		gets(ch);
-			if (isdigit(ch[j])) {
+			if (isdigit(ch[j]) || (ch[j] == '-' && ch[j+1] != '\0')) {
 				while (ch[j] != '\0')
 				{
 					if (ch[j] != ' ') {
 						while (ch[j] != ' ' && ch[j] != '\0') {
 							s[i] = ch[j];
+							j++;
+							i++;
+						}
+						num = atoi(s);
+						empilhar(p, num);
+						system("cls");
+						printf("--------------------------\n");
+						printf("| \t \t \t |\n");
+						printf("| Calculadora Polonesa   |\n");
+						printf("| \t \t \t |\n");
+						printf("--------------------------\n");
+						cont = 0;
+					}
+
+					else if ((ch[j] == '-' && isdigit(ch[j+1])) || (ch[j] == ' ' && ch[j+1] == '-' && isdigit(ch[j + 2]))){
+						free(s);
+						s = malloc(100 + 1);
+						j++;
+						while (ch[j] != ' ' && ch[j] != '\0') {
+							s[i-1] = ch[j];
 							j++;
 							i++;
 						}
@@ -107,18 +59,25 @@ int main() {
 							j++;
 							i++;
 							empilhar(p, num);
+							system("cls");
+							printf("--------------------------\n");
+							printf("| \t \t \t |\n");
+							printf("| Calculadora Polonesa   |\n");
+							printf("| \t \t \t |\n");
+							printf("--------------------------\n");
+							cont = 0;
 						}
-						
+
 						else {
 							aplicarOperacao(p, ch[j]);
-							imprimir(p);
 							j++;
+							cont = 0;
 						}
 					}
 
 					else if (ch[j] == '+' || ch[j] == '-' || ch[j] == '*' || ch[j] == '/') {
 						aplicarOperacao(p, ch[j]);
-						imprimir(p);
+						cont = 0;
 					}
 				}
 				
@@ -127,9 +86,14 @@ int main() {
 			else{
 				if (ch[j] == '\0') {
 					if (cont == 0) {
-						printf("A pilha foi limpa\n\nAperte <enter> novamente para encerrar o programa\n");
+						system("cls");
+						printf("--------------------------\n");
+						printf("| \t \t \t |\n");
+						printf("| Calculadora Polonesa   |\n");
+						printf("| \t \t \t |\n");
+						printf("--------------------------\n");
 						limpar(p);
-						imprimir(p);
+						printf("A pilha foi limpa!\n\nAperte <enter> novamente para encerrar o programa\n");
 						cont++;
 					}
 
@@ -139,8 +103,13 @@ int main() {
 				}
 
 				else {
+					system("cls");
+					printf("--------------------------\n");
+					printf("| \t \t \t |\n");
+					printf("| Calculadora Polonesa   |\n");
+					printf("| \t \t \t |\n");
+					printf("--------------------------\n");
 					aplicarOperacao(p, ch[j]);
-					imprimir(p);
 				}
 			}
 			
@@ -148,6 +117,7 @@ int main() {
 			i = 0;
 			free(s);
 			s = malloc(100 + 1);
+			printf("Estado atual da pilha: ");
 			imprimir(p);
 		}
 	system("PAUSE");

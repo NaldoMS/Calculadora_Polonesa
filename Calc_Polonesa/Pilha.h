@@ -9,3 +9,4 @@ int tamanho(Pilha * p);
 int topo(Pilha * p);
 void imprimir(Pilha * p);
 void limpar(Pilha * p);
+void aplicarOperacao(Pilha * p, char op);

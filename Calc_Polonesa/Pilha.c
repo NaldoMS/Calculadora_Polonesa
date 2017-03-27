@@ -62,3 +62,65 @@ void imprimir(Pilha * p) {
 void limpar(Pilha * p) {
 	p->tp = 0;
 }
+
+void aplicarOperacao(Pilha * p, char op)
+{
+	int lhs, rhs, result;
+
+	if (tamanho(p) >= 2) {
+		rhs = desempilhar(p);
+		lhs = desempilhar(p);
+		switch (op) {
+		case '+':
+			result = lhs + rhs;
+			empilhar(p, result);
+			break;
+
+		case '-':
+			if (rhs < 0) {
+				result = (lhs + (rhs * (-1)));
+			}
+
+			else
+			{
+				result = lhs - rhs;
+			}
+
+			empilhar(p, result);
+			break;
+
+		case '*':
+			result = lhs * rhs;
+			empilhar(p, result);
+			break;
+
+		case '/':
+			if (rhs != 0) {
+				result = lhs / rhs;
+				empilhar(p, result);
+				break;
+			}
+
+			else {
+				printf("Impossivel a divisao por zero\n");
+				empilhar(p, lhs);
+				empilhar(p, rhs);
+			}
+			break;
+
+		default: printf("Operacao invalida\n");
+			empilhar(p, lhs);
+			empilhar(p, rhs);
+
+		}
+	}
+
+	else
+	{
+		printf("Voce nao pode realizar uma operacao com menos de dois numeros\n");
+		if (tamanho(p) == 1) {
+
+		}
+
+	}
+}
